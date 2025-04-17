@@ -1,4 +1,4 @@
-package com.example.weissschwarztoolbox.powerindicator
+package com.example.weissschwarztoolbox.powerIndicator
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -151,6 +151,47 @@ fun DrawerContent(
             )
 
 
+
+        // win/loss tracker
+        NavigationDrawerItem(
+            label = {
+                Text(
+                    text = "📉 Pack Tracker",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                )
+            },
+            selected = false,
+            onClick = {
+                onItemClick()
+                navController.navigate("packTracker") {
+                    popUpTo(navController.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            },
+            shape = RectangleShape)
+
+
+        // win/loss tracker
+        NavigationDrawerItem(
+            label = {
+                Text(
+                    text = "🧮 Damage Calculator",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                )
+            },
+            selected = false,
+            onClick = {
+                onItemClick()
+                navController.navigate("damageCalculator") {
+                    popUpTo(navController.graph.startDestinationId)
+                    launchSingleTop = true
+                }
+            },
+            shape = RectangleShape)
+
+
         // TODO calculator maybe?
 
     }

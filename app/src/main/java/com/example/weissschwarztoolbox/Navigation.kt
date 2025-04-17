@@ -5,9 +5,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.weissschwarztoolbox.chessclock.ChessClock
-import com.example.weissschwarztoolbox.firstsecond.FirstSecond
+import com.example.weissschwarztoolbox.damageCalculator.DamageCalculator
+import com.example.weissschwarztoolbox.firstSecond.FirstSecond
 import com.example.weissschwarztoolbox.home.HomeScreen
-import com.example.weissschwarztoolbox.powerindicator.PowerIndicator
+import com.example.weissschwarztoolbox.packTracker.PackTracker
+import com.example.weissschwarztoolbox.powerIndicator.PowerIndicator
 import com.example.weissschwarztoolbox.timer.Timer
 import com.example.weissschwarztoolbox.winlosstracker.WinLossTracker
 
@@ -41,6 +43,14 @@ fun Navigation(){
 
         composable("winLossTracker") {
             WinLossTracker(navController)
+        }
+
+        composable("packTracker") {
+            PackTracker(navController)
+        }
+
+        composable("damageCalculator") {
+            DamageCalculator(navController)
         }
 
     }
