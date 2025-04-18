@@ -1,13 +1,17 @@
 package com.example.weissschwarztoolbox.packtracker
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
@@ -18,6 +22,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,13 +33,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.weissschwarztoolbox.component.DrawerContent
 import com.example.weissschwarztoolbox.component.TopBarComponent
 import kotlinx.coroutines.launch
+import kotlin.reflect.full.memberProperties
 
 @Composable
 fun PackTracker(navController: NavController){
@@ -84,7 +92,7 @@ fun PackStatContent(paddings: PaddingValues) {
         .padding(paddings)
         .fillMaxSize()) {
 
-        PackHistorySelector(options, selected, onOptionSelected = { selected = it })
+//        PackHistorySelector(options, selected, onOptionSelected = { selected = it })
 
         PackInputFields()
 
@@ -124,7 +132,7 @@ fun PackHistorySelector(
             readOnly = true,
             value = selectedOption ?: "",
             onValueChange = {},
-            label = { Text("选择开包记录") },
+            label = { Text("Select Record") },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded)
             },
@@ -166,7 +174,7 @@ fun PackHistorySelector(
                 .weight(1f)
                 .padding(10.dp),
             onClick = {}) {
-            Text("load")
+            Text("save")
         }
 
         Button(
@@ -174,6 +182,16 @@ fun PackHistorySelector(
                 .weight(1f)
                 .padding(10.dp),
             onClick = {}) {
+            Text("load")
+        }
+
+        Button(
+            modifier = Modifier
+                .weight(1f)
+                .padding(10.dp),
+            onClick = {},
+            colors = androidx.compose.material3.ButtonDefaults.buttonColors(Color.Red)
+        ) {
             Text("delete")
         }
     }
@@ -182,6 +200,9 @@ fun PackHistorySelector(
 
 @Composable
 fun PackInputFields() {
+
+    val context = LocalContext.current
+    val packStat = remember { mutableStateOf(PackStatStorage.load(context)) }
 
 
     Box(
@@ -193,38 +214,132 @@ fun PackInputFields() {
                 shape = RoundedCornerShape(30.dp)
             )
     ) {
+
+
+        // input field
         Column(modifier = Modifier.padding(10.dp)) {
 
-            Text(text = "Input Field", color = MaterialTheme.colorScheme.onPrimary)
 
+            // pack input
             Box(
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth()
                     .background(color = Color.Green)
             ) {
-                Text(text = "Pack Input Field", color = MaterialTheme.colorScheme.onPrimary)
+
+                PackNumInputField()
+
             }
 
+
+            // rarity input
             Box(
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth()
-                    .background(color = Color.Blue)
+                    .background(color = Color.LightGray)
             ) {
-                Text(text = "Active Input Field", color = MaterialTheme.colorScheme.onPrimary)
+
+                PackRarityInputField()
             }
 
-            Box(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth()
-                    .background(color = Color.Red)
-            ) {
-                Text(text = "Inactive Input Field", color = MaterialTheme.colorScheme.onPrimary)
-            }
 
         }
 
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun PackRarityInputField() {
+
+    val excluded = listOf("date", "packs", "cardsPerPack")
+    val rarityList = PackStat::class.memberProperties.map { it.name }.filterNot { it in excluded }
+
+
+
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        maxItemsInEachRow = 3,
+        horizontalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center,
+    ) {
+
+        rarityList.forEach { rarity ->
+
+            RarityCounterTile(
+                label = rarity,
+                count = 0,
+                countChange = {}
+            )
+        }
+
+    }
+}
+
+@Composable
+fun RarityCounterTile(
+    label: String,
+    count: Int,
+    countChange: (Int) -> Unit
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Text(label, style = MaterialTheme.typography.labelMedium)
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(4.dp)
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+        ) {
+            Button(
+                onClick = { if (count > 0) countChange(count - 1) },
+                contentPadding = PaddingValues(0.dp),
+                modifier = Modifier.size(32.dp)
+            ) {
+                Text("-")
+            }
+
+            Text(
+                text = count.toString(),
+                modifier = Modifier.padding(horizontal = 16.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Button(
+                onClick = { countChange(count + 1) },
+                contentPadding = PaddingValues(0.dp),
+                modifier = Modifier.size(32.dp)
+            ) {
+                Text("+")
+            }
+        }
+    }
+}
+
+
+@Composable
+fun PackNumInputField() {
+    Row() {
+        OutlinedTextField(
+            label = { Text("Packs") },
+            value = "",
+            onValueChange = {},
+            modifier = Modifier
+                .weight(1f)
+                .padding(10.dp)
+        )
+
+        OutlinedTextField(
+            label = { Text("Cards Per Pack") },
+            value = "",
+            onValueChange = {},
+            modifier = Modifier
+                .weight(1f)
+                .padding(10.dp)
+        )
     }
 }

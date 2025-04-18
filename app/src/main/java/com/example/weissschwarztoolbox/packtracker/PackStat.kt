@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PackStat(
-    val date: String,
     val packs: Int,
     val cardsPerPack: Int,
     val sp: Int,
