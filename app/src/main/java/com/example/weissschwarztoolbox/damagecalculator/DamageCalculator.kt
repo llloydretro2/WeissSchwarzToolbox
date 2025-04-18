@@ -1,4 +1,4 @@
-package com.example.weissschwarztoolbox.damageCalculator
+package com.example.weissschwarztoolbox.damagecalculator
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

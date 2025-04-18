@@ -10,10 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.weissschwarztoolbox.component.TopBarComponent
 import com.example.weissschwarztoolbox.component.DrawerContent
+import com.example.weissschwarztoolbox.component.TopBarComponent
 import kotlinx.coroutines.launch
-
 
 
 @Composable
@@ -22,10 +21,6 @@ fun HomeScreen(
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-
-
-
-
 
 
     ModalNavigationDrawer(
