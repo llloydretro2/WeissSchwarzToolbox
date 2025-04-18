@@ -1,7 +1,7 @@
 package com.example.weissschwarztoolbox.packtracker
 
 import android.content.Context
-import kotlinx.serialization.encodeToString
+import android.util.Log
 import kotlinx.serialization.json.Json
 import java.io.File
 
@@ -9,10 +9,18 @@ object PackStatStorage {
     private const val FILE_NAME = "pack_stat.json"
 
     fun save(context: Context, data: PackStat) {
-        val json = Json.encodeToString(data)
-        val file = File(context.filesDir, FILE_NAME)
-        file.writeText(json)
+        try {
+            Log.d("PackStatStorage", "Entered save $data")
+            val json = Json.encodeToString(data)
+            Log.d("PackStatStorage", "Encoded JSON: $json")
+            val file = File(context.filesDir, FILE_NAME)
+            file.writeText(json)
+            Log.d("PackStatStorage", "file saved successfully")
+        } catch (e: Exception) {
+            Log.e("PackStatStorage", "Error saving: ${e.message}", e)
+        }
     }
+
 
     fun load(context: Context): PackStat {
         val file = File(context.filesDir, FILE_NAME)

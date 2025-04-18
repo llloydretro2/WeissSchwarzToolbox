@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -58,8 +59,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.20")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation(libs.kotlinx.serialization.json)
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("com.patrykandpatrick.vico:compose:1.13.0") // Vico chart 库
+    implementation("com.patrykandpatrick.vico:core:1.13.0")
+    implementation("com.patrykandpatrick.vico:compose-m3:1.13.0") // Material3 支持
+
+
+
 
 
 }

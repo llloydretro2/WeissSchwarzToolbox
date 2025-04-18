@@ -14,7 +14,7 @@ import com.example.weissschwarztoolbox.timer.Timer
 import com.example.weissschwarztoolbox.winlosstracker.WinLossTracker
 
 @Composable
-fun Navigation(){
+fun Navigation() {
 
     val navController = rememberNavController()
 

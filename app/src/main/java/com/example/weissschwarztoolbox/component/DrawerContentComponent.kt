@@ -126,8 +126,6 @@ fun DrawerContent(
             )
 
 
-
-
         // win/loss tracker
         NavigationDrawerItem(
             label = {
@@ -151,7 +149,6 @@ fun DrawerContent(
             )
 
 
-
         // win/loss tracker
         NavigationDrawerItem(
             label = {
@@ -169,7 +166,8 @@ fun DrawerContent(
                     launchSingleTop = true
                 }
             },
-            shape = RectangleShape)
+            shape = RectangleShape
+        )
 
 
         // win/loss tracker
@@ -189,7 +187,8 @@ fun DrawerContent(
                     launchSingleTop = true
                 }
             },
-            shape = RectangleShape)
+            shape = RectangleShape
+        )
 
 
         // TODO calculator maybe?

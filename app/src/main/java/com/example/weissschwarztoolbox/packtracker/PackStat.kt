@@ -2,6 +2,7 @@ package com.example.weissschwarztoolbox.packtracker
 
 import kotlinx.serialization.Serializable
 
+
 @Serializable
 data class PackStat(
     val packs: Int,
@@ -19,3 +20,4 @@ data class PackStat(
     val rrrPlus: Int,
     val sr: Int
 )
+

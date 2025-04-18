@@ -5,6 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun DamageCalculator(navController: NavController){
+fun DamageCalculator(navController: NavController) {
     Text(text = "damage calculator")
 }

@@ -5,6 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun FirstSecond(navController: NavController){
+fun FirstSecond(navController: NavController) {
     Text(text = "First Second")
 }
