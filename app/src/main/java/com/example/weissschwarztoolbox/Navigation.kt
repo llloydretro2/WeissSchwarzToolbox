@@ -5,53 +5,54 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.weissschwarztoolbox.chessclock.ChessClock
+import com.example.weissschwarztoolbox.choosepack.ChoosePack
 import com.example.weissschwarztoolbox.damagecalculator.DamageCalculator
 import com.example.weissschwarztoolbox.firstsecond.FirstSecond
 import com.example.weissschwarztoolbox.home.HomeScreen
 import com.example.weissschwarztoolbox.packtracker.PackTracker
 import com.example.weissschwarztoolbox.powerindicator.PowerIndicator
 import com.example.weissschwarztoolbox.timer.Timer
-import com.example.weissschwarztoolbox.winlosstracker.WinLossTracker
+import com.example.weissschwarztoolbox.winlosstracker.winLossTracker
 
 @Composable
 fun Navigation() {
+	val navController = rememberNavController()
 
-    val navController = rememberNavController()
+	NavHost(navController = navController, startDestination = "home") {
+		composable("home") {
+			HomeScreen(navController)
+		}
 
+		composable("powerIndicator") {
+			PowerIndicator(navController)
+		}
 
-    NavHost(navController = navController, startDestination = "packTracker") {
+		composable("chessClock") {
+			ChessClock(navController)
+		}
 
-        composable("home") {
-            HomeScreen(navController)
-        }
+		composable("timer") {
+			Timer(navController)
+		}
 
-        composable("powerIndicator") {
-            PowerIndicator(navController)
-        }
+		composable("firstSecond") {
+			FirstSecond(navController)
+		}
 
-        composable("chessClock") {
-            ChessClock(navController)
-        }
+		composable("winLossTracker") {
+			winLossTracker(navController)
+		}
 
-        composable("timer") {
-            Timer(navController)
-        }
+		composable("packTracker") {
+			PackTracker(navController)
+		}
 
-        composable("firstSecond") {
-            FirstSecond(navController)
-        }
+		composable("damageCalculator") {
+			DamageCalculator(navController)
+		}
 
-        composable("winLossTracker") {
-            WinLossTracker(navController)
-        }
-
-        composable("packTracker") {
-            PackTracker(navController)
-        }
-
-        composable("damageCalculator") {
-            DamageCalculator(navController)
-        }
-
-    }
+		composable("choosePack") {
+			ChoosePack(navController)
+		}
+	}
 }

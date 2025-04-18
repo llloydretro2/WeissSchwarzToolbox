@@ -6,5 +6,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun FirstSecond(navController: NavController) {
-    Text(text = "First Second")
+	Text(text = "First Second")
 }

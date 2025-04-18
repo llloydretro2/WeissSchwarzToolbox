@@ -6,5 +6,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun PowerIndicator(navController: NavController) {
-    Text(text = "Power Indicator")
+	Text(text = "Power Indicator")
 }

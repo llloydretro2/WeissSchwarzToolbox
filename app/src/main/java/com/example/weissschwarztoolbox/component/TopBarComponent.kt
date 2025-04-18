@@ -16,21 +16,26 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarComponent(menuClick: () -> Unit, title: String) {
-    TopAppBar(
-        title = { Text(title) },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        navigationIcon = {
-            Icon(
-                Icons.Default.Menu,
-                contentDescription = "Menu",
-                modifier = Modifier.Companion
-                    .padding(10.dp)
-                    .clickable { menuClick() }
-            )
-        }
-    )
+fun TopBarComponent(
+	menuClick: () -> Unit,
+	title: String,
+) {
+	TopAppBar(
+		title = { Text(title) },
+		colors =
+			TopAppBarDefaults.topAppBarColors(
+				containerColor = MaterialTheme.colorScheme.primary,
+				titleContentColor = MaterialTheme.colorScheme.onPrimary,
+			),
+		navigationIcon = {
+			Icon(
+				Icons.Default.Menu,
+				contentDescription = "Menu",
+				modifier =
+					Modifier.Companion
+						.padding(10.dp)
+						.clickable { menuClick() },
+			)
+		},
+	)
 }

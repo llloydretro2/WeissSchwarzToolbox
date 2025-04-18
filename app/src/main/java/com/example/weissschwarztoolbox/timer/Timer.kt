@@ -6,5 +6,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun Timer(navController: NavController) {
-    Text(text = "Timer")
+	Text(text = "Timer")
 }

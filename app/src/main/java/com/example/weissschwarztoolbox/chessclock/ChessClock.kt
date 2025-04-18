@@ -6,5 +6,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun ChessClock(navController: NavController) {
-    Text(text = "Chess Clock")
+	Text(text = "Chess Clock")
 }

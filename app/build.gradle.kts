@@ -24,7 +24,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -61,12 +61,10 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("com.patrykandpatrick.vico:compose:1.13.0") // Vico chart 库
+    implementation("com.patrykandpatrick.vico:compose:1.13.0")
     implementation("com.patrykandpatrick.vico:core:1.13.0")
-    implementation("com.patrykandpatrick.vico:compose-m3:1.13.0") // Material3 支持
+    implementation("com.patrykandpatrick.vico:compose-m3:1.13.0")
 
-
-
-
-
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-gif:2.5.0")
 }

@@ -6,5 +6,5 @@ import androidx.navigation.NavController
 
 @Composable
 fun DamageCalculator(navController: NavController) {
-    Text(text = "damage calculator")
+	Text(text = "damage calculator")
 }

@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "WeissSchwarzToolbox"
 include(":app")
- 
