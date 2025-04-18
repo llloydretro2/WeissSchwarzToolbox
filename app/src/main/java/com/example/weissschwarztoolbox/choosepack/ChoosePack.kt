@@ -76,7 +76,9 @@ fun ChoosePack(navController: NavController) {
 @Composable
 fun ChoosePackContent(padding: PaddingValues) {
 
+	var totalBoxInput by remember { mutableStateOf("") }
 	var totalBox by remember { mutableIntStateOf(0) }
+	var numbBoxInput by remember { mutableStateOf("") }
 	var numbBox by remember { mutableIntStateOf(0) }
 	var packList by remember { mutableStateOf(listOf<String>()) }
 
@@ -85,10 +87,14 @@ fun ChoosePackContent(padding: PaddingValues) {
 		Row(modifier = Modifier.padding(10.dp)) {
 
 			OutlinedTextField(
-				value = totalBox.toString(),
+				value = totalBoxInput,
 				onValueChange = {
 					try {
-						totalBox = it.toInt()
+						val filtered = it.filter { it.isDigit() }
+						totalBoxInput = filtered
+						if (it.isNotEmpty()) {
+							totalBox = it.toInt()
+						}
 					} catch (e: NumberFormatException) {
 						Log.d("ChoosePack", "Error: $e")
 					}
@@ -100,10 +106,14 @@ fun ChoosePackContent(padding: PaddingValues) {
 			)
 
 			OutlinedTextField(
-				value = numbBox.toString(),
+				value = numbBoxInput,
 				onValueChange = {
 					try {
-						numbBox = it.toInt()
+						val filtered = it.filter { it.isDigit() }
+						numbBoxInput = filtered
+						if (it.isNotEmpty()) {
+							numbBox = numbBoxInput.toInt()
+						}
 					} catch (e: NumberFormatException) {
 						Log.d("ChoosePack", "Error: $e")
 					}

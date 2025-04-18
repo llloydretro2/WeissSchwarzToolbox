@@ -25,19 +25,14 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -211,6 +206,7 @@ fun PackStats() {
 					data = pieData,
 					displayMap = rarityDisplayMap,
 					colors = pieColors,
+					totalCards = totalCards
 				)
 			}
 
@@ -256,8 +252,17 @@ fun pieChartWithLegend(
 	colors: List<Color>,
 	modifier: Modifier = Modifier,
 	chartSize: Dp = 200.dp,
+	totalCards: Int
 ) {
-	val total = data.values.sum()
+	val rarityTotal = data.values.sum()
+	val others = totalCards - rarityTotal
+
+	val fullData = if (others > 0f) {
+		data + ("others" to others)
+	} else {
+		data
+	}
+
 	var startAngle = -90f
 
 	Row(
@@ -267,8 +272,8 @@ fun pieChartWithLegend(
 		Canvas(
 			modifier = Modifier.size(chartSize),
 		) {
-			data.entries.forEachIndexed { index, entry ->
-				val sweepAngle = (entry.value / total) * 360f
+			fullData.entries.forEachIndexed { index, entry ->
+				val sweepAngle = (entry.value / totalCards) * 360f
 				drawArc(
 					color = colors.getOrElse(index) { Color.Gray },
 					startAngle = startAngle,
@@ -444,7 +449,7 @@ fun PackRarityInputField() {
 		modifier = Modifier.fillMaxWidth(),
 		maxItemsInEachRow = 3,
 		horizontalArrangement = Arrangement.Center,
-		verticalArrangement = Arrangement.spacedBy(4.dp),
+		verticalArrangement = Arrangement.spacedBy(1.dp),
 	) {
 		RarityCounterTile(label = "AGR", count = packStat.agr, countChange = {
 			try {
@@ -547,9 +552,9 @@ fun RarityCounterTile(
 				verticalAlignment = Alignment.CenterVertically,
 				modifier =
 					Modifier
-						.padding(4.dp)
+						.padding(2.dp)
 						.border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10.dp))
-						.padding(horizontal = 8.dp, vertical = 4.dp),
+						.padding(horizontal = 4.dp, vertical = 4.dp),
 			) {
 				Button(
 					onClick = { if (count > 0) countChange(count - 1) },
@@ -581,13 +586,29 @@ fun RarityCounterTile(
 fun PackNumInputField(packStatViewModel: PackStatViewModel) {
 	val packStat by packStatViewModel.packStat.collectAsState()
 
+	var packsDisplay by remember { mutableStateOf("") }
+	var cardsPerPackDisplay by remember { mutableStateOf("") }
+
+	LaunchedEffect(packStat.packs) {
+		packsDisplay = if (packStat.packs == 0) "" else packStat.packs.toString()
+	}
+
+	LaunchedEffect(packStat.cardsPerPack) {
+		cardsPerPackDisplay = if (packStat.cardsPerPack == 0) "" else packStat.cardsPerPack.toString()
+	}
+
 	Row {
 		OutlinedTextField(
 			label = { Text("Packs") },
-			value = packStat.packs.toString(),
+			value = packsDisplay,
 			onValueChange = {
+				val filtered = it.filter { it.isDigit() }
+				packsDisplay = filtered
 				try {
-					packStatViewModel.updatePacks(it.toInt())
+					if (packsDisplay.isNotEmpty()) {
+						Log.d("PackNumInputField", it)
+						packStatViewModel.updatePacks(packsDisplay.toInt())
+					}
 				} catch (e: Exception) {
 					Log.d("PackNumInputField", "Error: ${e.message}")
 				}
@@ -600,10 +621,15 @@ fun PackNumInputField(packStatViewModel: PackStatViewModel) {
 
 		OutlinedTextField(
 			label = { Text("Cards Per Pack") },
-			value = packStat.cardsPerPack.toString(),
+			value = cardsPerPackDisplay,
 			onValueChange = {
+				val filtered = it.filter { it.isDigit() }
+				cardsPerPackDisplay = filtered
 				try {
-					packStatViewModel.updateCardsPerPack(it.toInt())
+					if (cardsPerPackDisplay.isNotEmpty()) {
+						Log.d("PackNumInputField", it)
+						packStatViewModel.updateCardsPerPack(cardsPerPackDisplay.toInt())
+					}
 				} catch (e: Exception) {
 					Log.d("PackNumInputField", "Error: ${e.message}")
 				}
@@ -613,91 +639,5 @@ fun PackNumInputField(packStatViewModel: PackStatViewModel) {
 					.weight(1f)
 					.padding(10.dp),
 		)
-	}
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PackHistorySelector(
-	options: List<String>,
-	selectedOption: String?,
-	onOptionSelected: (String) -> Unit,
-) {
-	var expanded by remember { mutableStateOf(false) }
-
-	ExposedDropdownMenuBox(
-		expanded = expanded,
-		onExpandedChange = { expanded = !expanded },
-	) {
-		TextField(
-			readOnly = true,
-			value = selectedOption ?: "",
-			onValueChange = {},
-			label = { Text("Select Record") },
-			trailingIcon = {
-				ExposedDropdownMenuDefaults.TrailingIcon(expanded)
-			},
-			modifier =
-				Modifier.Companion
-					.fillMaxWidth()
-					.menuAnchor(MenuAnchorType.Companion.PrimaryEditable),
-		)
-
-		ExposedDropdownMenu(
-			expanded = expanded,
-			onDismissRequest = { expanded = false },
-		) {
-			options.forEach { item ->
-				DropdownMenuItem(text = { Text(item) }, onClick = {
-					onOptionSelected(item)
-					expanded = false
-				})
-			}
-		}
-	}
-
-	Row(
-		modifier = Modifier.Companion.fillMaxWidth(),
-	) {
-		Button(
-			modifier =
-				Modifier.Companion
-					.weight(1f)
-					.padding(10.dp),
-			onClick = {},
-		) {
-			Text("new")
-		}
-
-		Button(
-			modifier =
-				Modifier.Companion
-					.weight(1f)
-					.padding(10.dp),
-			onClick = {},
-		) {
-			Text("save")
-		}
-
-		Button(
-			modifier =
-				Modifier.Companion
-					.weight(1f)
-					.padding(10.dp),
-			onClick = {},
-		) {
-			Text("load")
-		}
-
-		Button(
-			modifier =
-				Modifier.Companion
-					.weight(1f)
-					.padding(10.dp),
-			onClick = {},
-			colors = ButtonDefaults.buttonColors(Color.Companion.Red),
-		) {
-			Text("delete")
-		}
 	}
 }
