@@ -12,11 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.weissschwarztoolbox.chessclock.ChessClock
+import com.example.weissschwarztoolbox.chessclock.ChessClockViewModel
 import com.example.weissschwarztoolbox.choosepack.ChoosePack
 import com.example.weissschwarztoolbox.damagecalculator.DamageCalculator
 import com.example.weissschwarztoolbox.firstsecond.FirstSecond
@@ -34,6 +36,8 @@ fun Navigation() {
 	val navController = rememberNavController()
 	val currentBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentRoute = currentBackStackEntry?.destination?.route
+	val chessClockViewModel: ChessClockViewModel = viewModel()
+
 
 	val isHome = currentRoute == "home"
 	if (isHome) {
@@ -50,7 +54,7 @@ fun Navigation() {
 		}
 
 		composable("chessClock") {
-			ChessClock(navController)
+			ChessClock(navController = navController, chessClockViewModel = chessClockViewModel)
 		}
 
 		composable("timer") {
