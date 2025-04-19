@@ -93,6 +93,26 @@ fun DrawerContent(
 			shape = RectangleShape,
 		)
 
+		// first/second
+		NavigationDrawerItem(
+			label = {
+				Text(
+					text = "1️⃣ First/Second",
+					color = MaterialTheme.colorScheme.onPrimary,
+					fontSize = MaterialTheme.typography.titleMedium.fontSize,
+				)
+			},
+			selected = false,
+			onClick = {
+				onItemClick()
+				navController.navigate("firstSecond") {
+					popUpTo(navController.graph.startDestinationId)
+					launchSingleTop = true
+				}
+			},
+			shape = RectangleShape,
+		)
+
 
 
 
@@ -182,26 +202,6 @@ fun DrawerContent(
 			onClick = {
 				onItemClick()
 				navController.navigate("timer") {
-					popUpTo(navController.graph.startDestinationId)
-					launchSingleTop = true
-				}
-			},
-			shape = RectangleShape,
-		)
-
-		// first/second
-		NavigationDrawerItem(
-			label = {
-				Text(
-					text = "1️⃣ First/Second",
-					color = MaterialTheme.colorScheme.onPrimary,
-					fontSize = MaterialTheme.typography.titleMedium.fontSize,
-				)
-			},
-			selected = false,
-			onClick = {
-				onItemClick()
-				navController.navigate("firstSecond") {
 					popUpTo(navController.graph.startDestinationId)
 					launchSingleTop = true
 				}

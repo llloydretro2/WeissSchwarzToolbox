@@ -148,7 +148,6 @@ fun ChoosePackContent(padding: PaddingValues) {
 				focusManager.clearFocus()
 				keyboardController?.hide()
 
-				val timestamp: Int = (System.currentTimeMillis() / 1000).toInt()
 				val startDate = LocalDate.of(2001, 12, 11)
 				val startInstant = startDate.atStartOfDay().toInstant(ZoneOffset.UTC)
 				val nowInstant = Instant.now()
@@ -159,7 +158,7 @@ fun ChoosePackContent(padding: PaddingValues) {
 
 				if (totalBox > 0 && numbBox in 1..totalBox) {
 					val allPacks = (1..totalBox).toList()
-					val randomPicked = allPacks.shuffled().take(numbBox).sorted()
+					val randomPicked = allPacks.shuffled(random).take(numbBox).sorted()
 					packList = randomPicked.map { "$it" }
 				}
 			},
