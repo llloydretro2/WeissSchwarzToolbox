@@ -1,6 +1,8 @@
 package com.example.weissschwarztoolbox.choosepack
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.ImageLoader
@@ -37,7 +41,12 @@ import coil.request.ImageRequest
 import com.example.weissschwarztoolbox.component.DrawerContent
 import com.example.weissschwarztoolbox.component.TopBarComponent
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.temporal.ChronoUnit
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChoosePack(navController: NavController) {
 
@@ -73,6 +82,7 @@ fun ChoosePack(navController: NavController) {
 	}
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ChoosePackContent(padding: PaddingValues) {
 
@@ -81,6 +91,12 @@ fun ChoosePackContent(padding: PaddingValues) {
 	var numbBoxInput by remember { mutableStateOf("") }
 	var numbBox by remember { mutableIntStateOf(0) }
 	var packList by remember { mutableStateOf(listOf<String>()) }
+
+	val focusManager = LocalFocusManager.current
+	val keyboardController = LocalSoftwareKeyboardController.current
+
+
+
 
 	Column(modifier = Modifier.padding(padding)) {
 
@@ -99,13 +115,14 @@ fun ChoosePackContent(padding: PaddingValues) {
 						Log.d("ChoosePack", "Error: $e")
 					}
 				},
-				label = { Text("Total Box") },
+				label = { Text("Total Number") },
 				modifier = Modifier
 					.weight(1f)
 					.padding(10.dp)
 			)
 
 			OutlinedTextField(
+				maxLines = 1,
 				value = numbBoxInput,
 				onValueChange = {
 					try {
@@ -118,7 +135,7 @@ fun ChoosePackContent(padding: PaddingValues) {
 						Log.d("ChoosePack", "Error: $e")
 					}
 				},
-				label = { Text("How many you want?") },
+				label = { Text("Number of Pack") },
 				modifier = Modifier
 					.weight(1f)
 					.padding(10.dp)
@@ -127,6 +144,19 @@ fun ChoosePackContent(padding: PaddingValues) {
 
 		Button(
 			onClick = {
+
+				focusManager.clearFocus()
+				keyboardController?.hide()
+
+				val timestamp: Int = (System.currentTimeMillis() / 1000).toInt()
+				val startDate = LocalDate.of(2001, 12, 11)
+				val startInstant = startDate.atStartOfDay().toInstant(ZoneOffset.UTC)
+				val nowInstant = Instant.now()
+				val elapsedSeconds = ChronoUnit.SECONDS.between(startInstant, nowInstant)
+				val elapsedSecondsInt = elapsedSeconds.toInt()
+
+				val random = java.util.Random(elapsedSecondsInt.toLong())
+
 				if (totalBox > 0 && numbBox in 1..totalBox) {
 					val allPacks = (1..totalBox).toList()
 					val randomPicked = allPacks.shuffled().take(numbBox).sorted()
