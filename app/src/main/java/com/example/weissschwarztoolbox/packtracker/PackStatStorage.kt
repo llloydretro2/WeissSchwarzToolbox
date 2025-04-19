@@ -29,7 +29,7 @@ object PackStatStorage {
 		return if (file.exists()) {
 			try {
 				Json.decodeFromString(file.readText())
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				PackStat(
 					packs = 0,
 					cardsPerPack = 0,

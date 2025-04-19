@@ -445,7 +445,7 @@ fun PackRarityInputField() {
 	val packStatViewModel: PackStatViewModel = viewModel()
 	val packStat by packStatViewModel.packStat.collectAsState()
 
-	Column() {
+	Column {
 
 		FlowRow(
 			modifier = Modifier.fillMaxWidth(),
@@ -454,75 +454,63 @@ fun PackRarityInputField() {
 			verticalArrangement = Arrangement.spacedBy(1.dp),
 		) {
 			RarityCounterTile(label = "AGR", count = packStat.agr, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateAgr(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "SIR", count = packStat.sir, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSir(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "SEC+", count = packStat.secPlus, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSecPlus(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "SEC", count = packStat.sec, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSec(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "SSP", count = packStat.ssp, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSsp(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "SP", count = packStat.sp, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSp(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "SR", count = packStat.sr, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSr(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "Set Rarity", count = packStat.setRarity, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateSetRarity(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "RRR+", count = packStat.rrrPlus, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateRrrPlus(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "RRR", count = packStat.rrr, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateRrr(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "RR", count = packStat.rr, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateRr(it)
-				} catch (e: Exception) {
 				}
 			})
 			RarityCounterTile(label = "R", count = packStat.r, countChange = {
-				try {
+				runCatching {
 					packStatViewModel.updateR(it)
-				} catch (e: Exception) {
 				}
 			})
 		}
@@ -637,11 +625,10 @@ fun PackNumInputField(packStatViewModel: PackStatViewModel) {
 			onValueChange = {
 				val filtered = it.filter { it.isDigit() }
 				packsDisplay = filtered
-				try {
+				runCatching {
 					if (packsDisplay.isNotEmpty()) {
 						packStatViewModel.updatePacks(packsDisplay.toInt())
 					}
-				} catch (e: Exception) {
 				}
 			},
 			modifier =
@@ -656,11 +643,10 @@ fun PackNumInputField(packStatViewModel: PackStatViewModel) {
 			onValueChange = {
 				val filtered = it.filter { it.isDigit() }
 				cardsPerPackDisplay = filtered
-				try {
+				runCatching {
 					if (cardsPerPackDisplay.isNotEmpty()) {
 						packStatViewModel.updateCardsPerPack(cardsPerPackDisplay.toInt())
 					}
-				} catch (e: Exception) {
 				}
 			},
 			modifier =

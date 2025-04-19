@@ -113,6 +113,46 @@ fun DrawerContent(
 			shape = RectangleShape,
 		)
 
+		// Chess Clock
+		NavigationDrawerItem(
+			label = {
+				Text(
+					text = "♟\uFE0F Chess Clock",
+					color = MaterialTheme.colorScheme.onPrimary,
+					fontSize = MaterialTheme.typography.titleMedium.fontSize,
+				)
+			},
+			selected = false,
+			onClick = {
+				onItemClick()
+				navController.navigate("chessClock") {
+					popUpTo(navController.graph.startDestinationId)
+					launchSingleTop = true
+				}
+			},
+			shape = RectangleShape,
+		)
+
+		// Timer
+		NavigationDrawerItem(
+			label = {
+				Text(
+					text = "⏰ Timer",
+					color = MaterialTheme.colorScheme.onPrimary,
+					fontSize = MaterialTheme.typography.titleMedium.fontSize,
+				)
+			},
+			selected = false,
+			onClick = {
+				onItemClick()
+				navController.navigate("timer") {
+					popUpTo(navController.graph.startDestinationId)
+					launchSingleTop = true
+				}
+			},
+			shape = RectangleShape,
+		)
+
 
 
 
@@ -169,45 +209,6 @@ fun DrawerContent(
 			shape = RectangleShape,
 		)
 
-		// Chess Clock
-		NavigationDrawerItem(
-			label = {
-				Text(
-					text = "♟\uFE0F Chess Clock",
-					color = MaterialTheme.colorScheme.onPrimary,
-					fontSize = MaterialTheme.typography.titleMedium.fontSize,
-				)
-			},
-			selected = false,
-			onClick = {
-				onItemClick()
-				navController.navigate("chessClock") {
-					popUpTo(navController.graph.startDestinationId)
-					launchSingleTop = true
-				}
-			},
-			shape = RectangleShape,
-		)
-
-		// Timer
-		NavigationDrawerItem(
-			label = {
-				Text(
-					text = "⏰ Timer",
-					color = MaterialTheme.colorScheme.onPrimary,
-					fontSize = MaterialTheme.typography.titleMedium.fontSize,
-				)
-			},
-			selected = false,
-			onClick = {
-				onItemClick()
-				navController.navigate("timer") {
-					popUpTo(navController.graph.startDestinationId)
-					launchSingleTop = true
-				}
-			},
-			shape = RectangleShape,
-		)
 
 		// win/loss tracker
 		NavigationDrawerItem(
