@@ -25,6 +25,7 @@ import com.example.weissschwarztoolbox.firstsecond.FirstSecond
 import com.example.weissschwarztoolbox.home.HomeScreen
 import com.example.weissschwarztoolbox.packtracker.PackTracker
 import com.example.weissschwarztoolbox.powerindicator.PowerIndicator
+import com.example.weissschwarztoolbox.shuffle.Shuffle
 import com.example.weissschwarztoolbox.timer.Timer
 import com.example.weissschwarztoolbox.winlosstracker.winLossTracker
 import kotlinx.coroutines.delay
@@ -79,6 +80,10 @@ fun Navigation() {
 
 		composable("choosePack") {
 			ChoosePack(navController)
+		}
+
+		composable("shuffle") {
+			Shuffle(navController)
 		}
 	}
 }

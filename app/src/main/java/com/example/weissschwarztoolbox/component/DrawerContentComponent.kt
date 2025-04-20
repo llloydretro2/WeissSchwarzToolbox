@@ -175,6 +175,8 @@ fun DrawerContent(
 
 
 
+
+
 		Box(
 			modifier =
 				Modifier.Companion
@@ -244,6 +246,27 @@ fun DrawerContent(
 			onClick = {
 				onItemClick()
 				navController.navigate("damageCalculator") {
+					popUpTo(navController.graph.startDestinationId)
+					launchSingleTop = true
+				}
+			},
+			shape = RectangleShape,
+		)
+
+
+		// Shuffle
+		NavigationDrawerItem(
+			label = {
+				Text(
+					text = "🔀 Shuffle",
+					color = MaterialTheme.colorScheme.onPrimary,
+					fontSize = MaterialTheme.typography.titleMedium.fontSize,
+				)
+			},
+			selected = false,
+			onClick = {
+				onItemClick()
+				navController.navigate("shuffle") {
 					popUpTo(navController.graph.startDestinationId)
 					launchSingleTop = true
 				}
