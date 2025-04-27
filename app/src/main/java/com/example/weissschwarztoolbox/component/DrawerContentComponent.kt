@@ -154,6 +154,27 @@ fun DrawerContent(
 		)
 
 
+		// Shuffle
+		NavigationDrawerItem(
+			label = {
+				Text(
+					text = "🔀 Shuffle",
+					color = MaterialTheme.colorScheme.onPrimary,
+					fontSize = MaterialTheme.typography.titleMedium.fontSize,
+				)
+			},
+			selected = false,
+			onClick = {
+				onItemClick()
+				navController.navigate("shuffle") {
+					popUpTo(navController.graph.startDestinationId)
+					launchSingleTop = true
+				}
+			},
+			shape = RectangleShape,
+		)
+
+
 
 
 
@@ -254,25 +275,6 @@ fun DrawerContent(
 		)
 
 
-		// Shuffle
-		NavigationDrawerItem(
-			label = {
-				Text(
-					text = "🔀 Shuffle",
-					color = MaterialTheme.colorScheme.onPrimary,
-					fontSize = MaterialTheme.typography.titleMedium.fontSize,
-				)
-			},
-			selected = false,
-			onClick = {
-				onItemClick()
-				navController.navigate("shuffle") {
-					popUpTo(navController.graph.startDestinationId)
-					launchSingleTop = true
-				}
-			},
-			shape = RectangleShape,
-		)
 
 
 	}

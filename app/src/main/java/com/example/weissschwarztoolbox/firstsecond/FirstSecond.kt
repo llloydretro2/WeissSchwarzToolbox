@@ -1,11 +1,13 @@
 package com.example.weissschwarztoolbox.firstsecond
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -20,9 +22,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
+import com.example.weissschwarztoolbox.R
 import com.example.weissschwarztoolbox.component.DrawerContent
 import com.example.weissschwarztoolbox.component.TopBarComponent
 import kotlinx.coroutines.launch
@@ -84,20 +89,23 @@ fun FirstSecondContent(padding: PaddingValues) {
 
 		if (cardRevealed) {
 
-			var cardImg = ""
+			var cardImg = 0
 			cardImg = if (firstSecond) {
-				"file:///android_asset/ims_s.png"
+				R.drawable.ims_s
 			} else {
-				"file:///android_asset/ims_k.png"
+				R.drawable.ims_k
 			}
 
-			AsyncImage(
-				model = cardImg,
-				contentDescription = "First/Second",
+			Image(
+				painter = painterResource(id = cardImg),
+				contentDescription = "first/second",
+				contentScale = ContentScale.Companion.Crop,
 				modifier = Modifier
+					.fillMaxWidth()
+					.clip(RoundedCornerShape(4.dp))
 					.padding(10.dp)
-					.fillMaxWidth(),
 			)
+
 
 		}
 
