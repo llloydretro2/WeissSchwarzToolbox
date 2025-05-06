@@ -21,6 +21,7 @@ import com.example.weissschwarztoolbox.chessclock.ChessClock
 import com.example.weissschwarztoolbox.chessclock.ChessClockViewModel
 import com.example.weissschwarztoolbox.choosepack.ChoosePack
 import com.example.weissschwarztoolbox.damagecalculator.DamageCalculator
+import com.example.weissschwarztoolbox.dice.Dice
 import com.example.weissschwarztoolbox.firstsecond.FirstSecond
 import com.example.weissschwarztoolbox.home.HomeScreen
 import com.example.weissschwarztoolbox.packtracker.PackTracker
@@ -84,6 +85,10 @@ fun Navigation() {
 
 		composable("shuffle") {
 			Shuffle(navController)
+		}
+
+		composable("dice") {
+			Dice(navController)
 		}
 	}
 }

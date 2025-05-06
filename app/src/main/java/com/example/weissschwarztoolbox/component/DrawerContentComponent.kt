@@ -175,6 +175,27 @@ fun DrawerContent(
 		)
 
 
+		// Dice
+		NavigationDrawerItem(
+			label = {
+				Text(
+					text = "🎲 Dice",
+					color = MaterialTheme.colorScheme.onPrimary,
+					fontSize = MaterialTheme.typography.titleMedium.fontSize,
+				)
+			},
+			selected = false,
+			onClick = {
+				onItemClick()
+				navController.navigate("dice") {
+					popUpTo(navController.graph.startDestinationId)
+					launchSingleTop = true
+				}
+			},
+			shape = RectangleShape,
+		)
+
+
 
 
 
